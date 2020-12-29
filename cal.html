@@ -1,0 +1,303 @@
+<html>
+	<head>
+		<style type="text/css">
+			body,
+			html {
+				margin: 100px 0;
+				background-color: #c2c3d7;
+			}
+
+			.container {
+				display: grid;
+				grid-template-columns: auto auto auto auto;
+				background-color: black;
+				padding: 5px;
+				grid-gap: 2px;
+				height: 50vh;
+			}
+
+			.container > div {
+				display: grid;
+				text-align: center;
+				font-size: 16px;
+				padding: 20px;
+				-webkit-transition: 0.3s ease-in-out;
+				transition: 0.3s ease-in-out;
+				border: none;
+				color: white;
+				outline: none;
+				margin: 0;
+			}
+
+			.readinput {
+				grid-column-start: 1;
+				grid-column-end: 5;
+			}
+
+			#result {
+				border: none;
+				background-color: transparent;
+				color: white;
+				text-align: right;
+				padding-top: 20px;
+				padding-right: 10px;
+				padding-left: 10px;
+				font-size: 20px;
+			}
+
+			#ac {
+				grid-column-start: 1;
+				grid-column-end: 3;
+				background-color: #ac393a;
+			}
+
+			#ac:hover {
+				background-color: red;
+			}
+
+			.eq {
+				grid-column-start: 4;
+				grid-column-end: 4;
+				grid-row-start: 5;
+				grid-row-end: 7;
+				background-color: #004466;
+			}
+
+			.eq:hover {
+				background-color: #02344d;
+			}
+
+			.num {
+				background-color: #4d4d4d;
+			}
+
+			.num:hover {
+				background-color: rgb(90, 87, 87);
+			}
+
+			#zero {
+				grid-column-start: 1;
+				grid-column-end: 3;
+			}
+
+			.opr {
+				background-color: #666666;
+			}
+
+			.opr:hover {
+				background-color: #4d4747;
+			}
+
+			a:focus {
+				background-color: blue;
+			}
+
+			@media only screen and (max-width: 1366px) {
+				.container {
+					width: auto;
+					height: auto;
+					margin-left: 0;
+					margin-top: 15vh;
+				}
+
+				.body {
+					background-color: black;
+					margin: 0;
+					padding: 0px;
+					width: 100%;
+				}
+			}
+
+			@media only screen and (min-width: 1366px) {
+				.container {
+					margin-left: 35%;
+					width: 30%;
+					height: fit-content;
+					margin-top: 15vh;
+				}
+			}
+		</style>
+		<script>
+			var total = 0;
+			var c = 0;
+			var cc = 0;
+			var s = "";
+
+			function unchange() {
+				var divItems = document.getElementsByClassName("opr");
+				for (var i = 0; i < divItems.length; i++) {
+					for (let item of divItems) {
+						item.style.color = "#66666";
+					}
+				}
+			}
+
+			function d(val) {
+				if (total != 0) {
+					if (val == "+" || val == "-" || val == "/" || val == "*") {
+						total = 0;
+						document.getElementById("result").value += val;
+					} else {
+						cleard();
+						total = 0;
+						document.getElementById("result").value += val;
+					}
+				} else if (
+					total != 0 &&
+					(val != "+" || val != "-" || val != "/" || val != "*")
+				) {
+					cleard();
+					document.getElementById("result").value += val;
+				} else {
+					s = "";
+					if (val == "+") {
+						var disp = document.getElementById("result").value;
+						if (
+							disp[disp.length - 1] == "+" ||
+							disp[disp.length - 1] == "-" ||
+							disp[disp.length - 1] == "/" ||
+							disp[disp.length - 1] == "*"
+						) {
+							alert("Please check your operations!");
+						} else {
+							document.getElementById("result").value += val;
+						}
+					} else if (val == "-") {
+						var disp = document.getElementById("result").value;
+						if (disp[disp.length - 1] == "-") {
+							alert("Please check your operations!");
+						} else {
+							document.getElementById("result").value += val;
+						}
+					} else if (val == "/") {
+						// if (total == 0)
+						// 	alert("Please check your operations!");
+						// else {
+						var disp = document.getElementById("result").value;
+						if (
+							disp[disp.length - 1] == "+" ||
+							disp[disp.length - 1] == "-" ||
+							disp[disp.length - 1] == "/" ||
+							disp[disp.length - 1] == "*" ||
+							disp.length == 0
+						) {
+							alert("Please check your operations!");
+						} else {
+							document.getElementById("result").value += val;
+						}
+						// }
+					} else if (val == "*") {
+						// if (total == 0)
+						// 	alert("Please check your operations!");
+						// else {
+						var disp = document.getElementById("result").value;
+						if (
+							disp[disp.length - 1] == "+" ||
+							disp[disp.length - 1] == "-" ||
+							disp[disp.length - 1] == "/" ||
+							disp[disp.length - 1] == "*" ||
+							disp.length == 0
+						) {
+							alert("Please check your operations!");
+						} else {
+							document.getElementById("result").value += val;
+						}
+						// }
+					} else if (val == ".") {
+						if (c == 0) {
+							document.getElementById("result").value += val;
+							c++;
+						} else {
+							var disp = document.getElementById("result").value;
+							if (disp[disp.length - 1] == ".")
+								alert("Please check your operations! at 1");
+							else if (
+								disp[disp.length - 1] == "+" ||
+								disp[disp.length - 1] == "-" ||
+								disp[disp.length - 1] == "/" ||
+								disp[disp.length - 1] == "*"
+							) {
+								document.getElementById("result").value += val;
+							} else {
+								console.log(disp + "disp");
+								for (var i = disp.length - 1; i >= 0; i--) {
+									console.log("i=" + disp[i]);
+									console.log("i-1=" + disp[i - 1]);
+									if (disp[i] == ".") {
+										s = disp.substring(i, disp.length);
+										break;
+									} else if (
+										disp[i] == "+" ||
+										disp[i] == "-" ||
+										disp[i] == "/" ||
+										disp[i] == "*"
+									) {
+										s = disp.substring(i, disp.length);
+										console.log("Operator substring=" + s);
+										break;
+									}
+								}
+								console.log("s=" + s);
+								if (s.includes(".")) {
+									alert("Please check your operations!");
+								} else {
+									document.getElementById("result").value += val;
+									s = "";
+								}
+							}
+						}
+					} else document.getElementById("result").value += val;
+				}
+			}
+
+			function cleard() {
+				document.getElementById("result").value = "";
+			}
+
+			function solve() {
+				var s = document.getElementById("result").value;
+				s = s.replace(/[^-()\d/*+.]/g, "");
+				try {
+					eval(s);
+					total = eval(s);
+				} catch (e) {
+					total = "Invalid input";
+				}
+				if (isNaN(total)) total = "Invalid input";
+				else if (total == "Infinity") total = "Cannot be divided by zero";
+				document.getElementById("result").value = total;
+				c = 0;
+				s = "";
+			}
+		</script>
+	</head>
+
+	<body>
+		<div class="container">
+			<input
+				class="readinput"
+				type="text"
+				id="result"
+				readonly
+				placeholder="0"
+			/>
+			<div class="num" id="ac" onClick="cleard()">AC</div>
+			<div class="opr" onClick="d('/')">/</div>
+			<div class="opr" onClick="d('*')">X</div>
+			<div class="num" onClick="d('7')">7</div>
+			<div class="num" onClick="d('8')">8</div>
+			<div class="num" onClick="d('9')">9</div>
+			<div class="opr" onClick="d('-')">-</div>
+			<div class="num" onClick="d('4')">4</div>
+			<div class="num" onClick="d('5')">5</div>
+			<div class="num" onClick="d('6')">6</div>
+			<div class="opr" onClick="d('+')">+</div>
+			<div class="num" onClick="d('1')">1</div>
+			<div class="num" onClick="d('2')">2</div>
+			<div class="num" onClick="d('3')">3</div>
+			<div class="eq" onClick="solve()" style="padding-top: 22%">=</div>
+			<div class="num" id="zero" onClick="d('0')">0</div>
+			<div class="num" onClick="d('.')">.</div>
+		</div>
+	</body>
+</html>
